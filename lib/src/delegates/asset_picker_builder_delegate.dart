@@ -618,14 +618,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
           Navigator.maybeOf(context)?.maybePop();
         },
         tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-        icon: Icon(
-          Icons.close,
-          semanticLabel: switch (Theme.of(context).platform) {
-            TargetPlatform.android =>
-              MaterialLocalizations.of(context).closeButtonTooltip,
-            _ => null,
-          },
-        ),
+        icon: const Icon(Icons.close),
       ),
     );
   }
@@ -693,14 +686,17 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       ),
     );
 
-    final Widget accessLimitedButton = GestureDetector(
-      onTap: () {
-        permissionOverlayDisplay.value = false;
-      },
-      child: ScaleText(
-        textDelegate.accessLimitedAssets,
-        style: TextStyle(color: interactiveTextColor(context)),
-        semanticsLabel: semanticsTextDelegate.accessLimitedAssets,
+    final Widget accessLimitedButton = Semantics(
+      label: semanticsTextDelegate.accessLimitedAssets,
+      button: true,
+      child: GestureDetector(
+        onTap: () {
+          permissionOverlayDisplay.value = false;
+        },
+        child: ScaleText(
+          textDelegate.accessLimitedAssets,
+          style: TextStyle(color: interactiveTextColor(context)),
+        ),
       ),
     );
 
