@@ -9,6 +9,20 @@ that can be found in the LICENSE file. -->
 
 ## Unreleased
 
+*None.*
+
+## 9.5.1
+
+### Improvements
+
+- Allow `extended_image` v10.
+
+## 9.5.0
+
+### New features
+
+- Support drag to select.
+
 ### Fixes
 
 - Fixes semantics issues.
