@@ -24,7 +24,11 @@ dependencies:
 
   wechat_picker_library: ^1.0.5
 
-  extended_image: '>=8.3.0 <11.0.0'
+#  extended_image: '>=8.3.0 <11.0.0'
+  extended_image:
+    git:
+      url: https://github.com/tannguyen3489/extended_image.git
+      ref: a8ad1a06a248f3cff02a33b95eae980e7cb9e781
   photo_manager: ^3.5.0
   photo_manager_image_provider: ^2.2.0
   provider: ^6.0.5
