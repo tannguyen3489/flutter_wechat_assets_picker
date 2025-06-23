@@ -272,7 +272,7 @@ abstract class AssetPickerViewerBuilderDelegate<Asset, Path> {
   }
 
   void selectAsset(Asset entity) {
-    if (maxAssets != null && selectedCount > maxAssets!) {
+    if (maxAssets != null && selectedCount >= maxAssets!) {
       return;
     }
     provider?.selectAsset(entity);
@@ -460,18 +460,20 @@ class DefaultAssetPickerViewerBuilderDelegate
           final bool isSelected =
               (p?.currentlySelectedAssets ?? selectedAssets)?.contains(asset) ??
                   false;
-          final labels = <String>[
-            '${semanticsTextDelegate.semanticTypeLabel(asset.type)}'
-                '${index + 1}',
-            asset.createDateTime.toString().replaceAll('.000', ''),
-            if (asset.type == AssetType.audio || asset.type == AssetType.video)
-              '${semanticsTextDelegate.sNameDurationLabel}: '
-                  '${semanticsTextDelegate.durationIndicatorBuilder(asset.videoDuration)}',
-            if (asset.title case final title? when title.isNotEmpty) title,
-          ];
+          String hint = '';
+          if (asset.type == AssetType.audio || asset.type == AssetType.video) {
+            hint += '${semanticsTextDelegate.sNameDurationLabel}: ';
+            hint += textDelegate.durationIndicatorBuilder(asset.videoDuration);
+          }
+          if (asset.title?.isNotEmpty ?? false) {
+            hint += ', ${asset.title}';
+          }
           return Semantics(
-            label: labels.join(', '),
+            label: '${semanticsTextDelegate.semanticTypeLabel(asset.type)}'
+                '${index + 1}, '
+                '${asset.createDateTime.toString().replaceAll('.000', '')}',
             selected: isSelected,
+            hint: hint,
             image:
                 asset.type == AssetType.image || asset.type == AssetType.video,
             child: w,
@@ -735,11 +737,7 @@ class DefaultAssetPickerViewerBuilderDelegate
           tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           icon: Icon(
             Icons.arrow_back_ios_new,
-            semanticLabel: switch (Theme.of(context).platform) {
-              TargetPlatform.android =>
-                MaterialLocalizations.of(context).backButtonTooltip,
-              _ => null,
-            },
+            semanticLabel: MaterialLocalizations.of(context).backButtonTooltip,
           ),
         ),
       ),

@@ -141,12 +141,9 @@ class _AudioPageBuilderState extends State<AudioPageBuilder> {
   /// Title widget.
   /// 标题组件
   Widget get titleWidget {
-    // Excluding audio title from semantics since the label already includes.
-    return ExcludeSemantics(
-      child: ScaleText(
-        widget.asset.title ?? '',
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-      ),
+    return ScaleText(
+      widget.asset.title ?? '',
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
     );
   }
 
